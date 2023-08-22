@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   View,
   Text,
@@ -7,6 +6,9 @@ import {
   StyleSheet,
   I18nManager,
   ViewPropTypes,
+  ViewStyle,
+  TextStyle,
+  TextInputPros,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
@@ -29,7 +31,52 @@ const styles = StyleSheet.create({
   },
 });
 
-class SmoothPinCodeInput extends Component {
+export interface SmoothPinCodeInputProps {
+  value?: string,
+  codeLength?: number,
+  cellSize?: number,
+  cellSpacing?: number,
+
+  placeholder?: string | Element,
+  mask?: string | Element,
+  maskDelay?: number,
+  password?: boolean,
+
+  autoFocus?: boolean,
+
+  restrictToNumbers?: boolean,
+
+  containerStyle?: ViewStyle,
+
+  cellStyle?: ViewStyle,
+  cellStyleFocused?: ViewStyle,
+  cellStyleFilled?: ViewStyle,
+
+  textStyle: TextStyle,
+  textStyleFocused: TextStyle,
+
+  animated?: boolean,
+  animationFocused: string | Record<string, any>,
+
+  onFulfill?: (code: string) => void,
+  onChangeText?: (text: string) => void,
+  onBackspace?: () => void,
+  onTextChange?: (text: string) => void,
+  testID?: any,
+  onFocus?: () => void,
+  onBlur?: () => void,
+  keyboardType?: string,
+  editable?: boolean,
+  disableFullscreenUI?: boolean,
+  inputProps: TextInputPros,
+}
+
+export interface SmoothPinCodeInputState {
+  maskDelay: boolean;
+  focused: boolean;
+}
+
+class SmoothPinCodeInput extends Component<SmoothPinCodeInputProps, SmoothPinCodeInputState> {
 
   state = {
     maskDelay: false,
@@ -264,53 +311,5 @@ class SmoothPinCodeInput extends Component {
     disableFullscreenUI: true,
   };
 }
-
-SmoothPinCodeInput.propTypes = {
-  value: PropTypes.string,
-  codeLength: PropTypes.number,
-  cellSize: PropTypes.number,
-  cellSpacing: PropTypes.number,
-
-  placeholder: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-  ]),
-  mask: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-  ]),
-  maskDelay: PropTypes.number,
-  password: PropTypes.bool,
-
-  autoFocus: PropTypes.bool,
-
-  restrictToNumbers: PropTypes.bool,
-
-  containerStyle: ViewPropTypes.style,
-
-  cellStyle: ViewPropTypes.style,
-  cellStyleFocused: ViewPropTypes.style,
-  cellStyleFilled: ViewPropTypes.style,
-
-  textStyle: Text.propTypes.style,
-  textStyleFocused: Text.propTypes.style,
-
-  animated: PropTypes.bool,
-  animationFocused: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]),
-
-  onFulfill: PropTypes.func,
-  onChangeText: PropTypes.func,
-  onBackspace: PropTypes.func,
-  onTextChange: PropTypes.func,
-  testID: PropTypes.any,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  keyboardType: PropTypes.string,
-  editable: PropTypes.bool,
-  inputProps: PropTypes.exact(TextInput.propTypes),
-};
 
 export default SmoothPinCodeInput;
